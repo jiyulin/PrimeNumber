@@ -87,12 +87,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PrimeNumber.FrameWorkCore\PrimeNumber.FrameWorkCore.csproj">
-      <Project>{f4d21539-f371-4d7b-a507-6211cb17c1d5}</Project>
-      <Name>PrimeNumber.FrameWorkCore</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="opengps.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
