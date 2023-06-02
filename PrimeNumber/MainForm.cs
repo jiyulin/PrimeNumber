@@ -80,6 +80,13 @@ namespace PrimeNumber
             DateTime dtStart = DateTime.Now;
             Int64 startValue = Convert.ToInt64(this.txtStartValue.Text.Trim());
             Int64 endValue = Convert.ToInt64(this.txtMax.Text.Trim());
+            int useCores = Convert.ToInt32(this.txtSetCores.Text.Trim());
+
+            if (useCores > Environment.ProcessorCount)
+            {
+                useCores = Environment.ProcessorCount;
+                this.txtSetCores.Text = useCores.ToString();
+            }
 
             ParallelLoopResult result = new ParallelLoopResult();
             PrimeNumberList.Clear();
@@ -94,7 +101,7 @@ namespace PrimeNumber
                     string fileName = string.Format("{0}-{1}", startValue, endValue);
                     //计算核心
                     cts = new CancellationTokenSource();
-                    parallelOptions = new ParallelOptions() { MaxDegreeOfParallelism = Convert.ToInt32(this.txtSetCores.Text.Trim()), CancellationToken = cts.Token, };
+                    parallelOptions = new ParallelOptions() { MaxDegreeOfParallelism = useCores, CancellationToken = cts.Token, };
                     result = Parallel.For(startValue, endValue, parallelOptions, (x, pls) =>
                     {
                         bool IsPrimeNumber = Helper.PrimeNumberHelper.IsPrimeNumber(Convert.ToUInt64(x.ToString()));
