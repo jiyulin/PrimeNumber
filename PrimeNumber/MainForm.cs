@@ -4,7 +4,9 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -222,12 +224,42 @@ namespace PrimeNumber
                 return;
             }
 
-            string fileName = string.Format("{0}-{1}_WithSort", outList.Min(), outList.Max());
 
-            foreach (long num in outList)
+
+            ////可改为一次打开文件流直接写入，提升速度
+            //foreach (long num in outList)
+            //{
+            //    Helper.LogHelper.WriteBinLog(num.ToString(), "PrimeNumber_Parallel", fileName, false, false);
+            //}
+
+            string forder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string rename = "";
+            string fileName = string.Format("{0}-{1}_WithSort{2}.log", outList.Min(), outList.Max(), rename);
+            int renameIndex = 0;
+            string filePath = Path.Combine(forder, "PrimeNumber_Parallel", fileName);
+
+            //自动重命名
+            while (File.Exists(filePath))
             {
-                Helper.LogHelper.WriteBinLog(num.ToString(), "PrimeNumber_Parallel", fileName, false, false);
+                renameIndex++;
+                rename = string.Format("({0})", renameIndex);
+                fileName = string.Format("{0}-{1}_WithSort{2}.log", outList.Min(), outList.Max(), rename);
+                filePath = Path.Combine(forder, "PrimeNumber_Parallel", fileName);
             }
+
+            using (FileStream fs = new FileStream(filePath, FileMode.Append, FileAccess.Write))
+            using (StreamWriter sw = new StreamWriter(fs))
+            {
+                foreach (long num in outList)
+                {
+                    sw.WriteLine(num);
+                }
+                //sw.Flush();
+                sw.Close();
+                fs.Close();
+            }
+
+
             ShowLog("导出完成！" + fileName);
         }
     }
