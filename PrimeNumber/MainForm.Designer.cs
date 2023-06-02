@@ -42,6 +42,7 @@ namespace PrimeNumber
             this.btnSetCores = new System.Windows.Forms.Button();
             this.lbMsg = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.btnOut = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtMax
@@ -165,11 +166,22 @@ namespace PrimeNumber
             this.label3.TabIndex = 12;
             this.label3.Text = "启用内核数";
             // 
+            // button1
+            // 
+            this.btnOut.Location = new System.Drawing.Point(141, 86);
+            this.btnOut.Name = "button1";
+            this.btnOut.Size = new System.Drawing.Size(63, 23);
+            this.btnOut.TabIndex = 13;
+            this.btnOut.Text = "导出";
+            this.btnOut.UseVisualStyleBackColor = true;
+            this.btnOut.Click += new System.EventHandler(this.btnOut_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(314, 202);
+            this.Controls.Add(this.btnOut);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lbMsg);
             this.Controls.Add(this.btnSetCores);
@@ -205,5 +217,6 @@ namespace PrimeNumber
         private System.Windows.Forms.Button btnSetCores;
         private System.Windows.Forms.ListBox lbMsg;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnOut;
     }
 }

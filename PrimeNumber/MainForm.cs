@@ -194,5 +194,34 @@ namespace PrimeNumber
                 this.txtMsg.Text = DateTime.Now.ToString("HH:mm:ss.fffffff") + "，" + msg + Environment.NewLine;
             }));
         }
+
+        /// <summary>
+        /// 排序后导出文件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnOut_Click(object sender, EventArgs e)
+        {
+
+            List<long> outList = new List<long>();
+            lock (PrimeNumberListLock)
+            {
+                outList = PrimeNumberList;
+            }
+            outList.Sort();
+            if (outList.Count == 0)
+            {
+                ShowLog("无暂存结果可以导出！");
+                return;
+            }
+
+            string fileName = string.Format("{0}-{1}_WithSort", outList.Min(), outList.Max());
+
+            foreach (long num in outList)
+            {
+                Helper.LogHelper.WriteBinLog(num.ToString(), "PrimeNumber_Parallel", fileName, false, false);
+            }
+            ShowLog("导出完成！" + fileName);
+        }
     }
 }
